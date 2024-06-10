@@ -1,4 +1,4 @@
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   -- A list of parser names, or "all"
   ensure_installed = { 
 	"rust",
@@ -27,4 +27,12 @@ require'nvim-treesitter.configs'.setup {
   indent = {
     enable = true,
   },
-}
+       incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = false,
+          node_decremental = "<bs>",
+        },
+      }}
