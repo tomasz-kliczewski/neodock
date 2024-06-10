@@ -3,4 +3,5 @@ require("lazy").setup({
   "nvim-tree/nvim-web-devicons",
   "nvim-treesitter/nvim-treesitter",
   'Mofiqul/vscode.nvim',
-  })
+ 'nvim-lualine/lualine.nvim',
+})
