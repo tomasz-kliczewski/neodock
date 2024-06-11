@@ -11,16 +11,10 @@ require("lazy").setup({
       dependencies = { 'nvim-lua/plenary.nvim', { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },}
     },
   {
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  init = function()
+  "folke/which-key.nvim", event = "VeryLazy",  init = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300
   end,
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  }
-}
+  opts = {}
+},
 })
