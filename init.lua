@@ -1,5 +1,3 @@
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
 --
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -8,7 +6,6 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
     lazypath,
   })
 end
@@ -18,25 +15,16 @@ require("plugins")
 require("options")
 require("keymaps")
 
--- VSCODe
 local c = require('vscode.colors').get_colors()
 require('vscode').setup({
-    -- style = 'light'
-    -- transparent = true,
     italic_comments = true,
-    -- underline_links = true,
-    -- Disable nvim-tree background color
-    -- disable_nvimtree_bg = true,
 })
 require('vscode').load()
--- load the theme without affecting devicon colors.
 vim.cmd.colorscheme "vscode"
 
--- lualine
 
 require('lualine').setup {
   options = {        
-    -- fmt = string.lower,
     icons_enabled = true,
     theme = 'vscode',
     component_separators = { left = '', right = ''},
@@ -76,29 +64,16 @@ require('lualine').setup {
   extensions = {}
 }
 
--- nvim-tree 
 
 require('nvim-tree').setup {
     sort_by = "case_sensitive",
     view = {
-        -- adaptive_size = false,
         width = 30,
-        -- mappings = {  list = {{ key = "u", action = "dir_up" }, }, },
     },
     renderer = {
         group_empty = true,
         icons = {
             git_placement = "after",
-        --     glyphs = {
-        --         git = {
-        --             unstaged = "-",
-        --             staged = "s",
-        --             untracked = "u",
-        --             renamed = "r",
-        --             deleted = "d",
-        --             ignored = "i",
-        --         },
-        --     },
         },
     },
     filters = {
@@ -108,17 +83,59 @@ require('nvim-tree').setup {
         ignore = false,
     },
 }
+-- nvim-treesitter
+
+require('nvim-treesitter.configs').setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { 
+	"rust",
+	"lua",
+	"python",
+	"json",
+        "javascript",
+        "typescript",
+        "yaml",
+        "html",
+        "css",
+        "svelte",
+        "bash",
+        "lua",
+        "vim",
+        "dockerfile",
+        "gitignore",
+        "c",},
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = true,
+  },
+  indent = {
+    enable = true,
+  },
+       incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = false,
+          node_decremental = "<bs>",
+        },
+      }}
+
+
+-- nvim-cmp
 
 local cmp = require("cmp")
-
 require("luasnip.loaders.from_vscode").lazy_load()
-
+--
 cmp.setup({
   mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-o>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
+      -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      -- ['<C-o>'] = cmp.mapping.complete(),
+      -- ['<C-e>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
   snippet = {
@@ -126,14 +143,19 @@ cmp.setup({
       require('luasnip').lsp_expand(args.body)
     end,
   },
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  }, {
-    { name = 'buffer' },
-  }),
-})
+  sources = {
+    { name = 'path' },                              -- file paths
+    { name = 'nvim_lsp'},                           -- from language server
+    { name = 'nvim_lsp_signature_help'},            -- display function signatures with current parameter emphasized
+    -- { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
+    { name = 'buffer', keyword_length = 2 },        -- source current buffer
+    { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip 
+    { name = 'calc'},                               -- source for math calculation
+    -- { name = 'luasnip' },
 
+  },
+})
+--
 require("mason").setup {}
 require("mason-lspconfig").setup { ensure_installed = { "pyright", }, }
 require 'lspconfig'.pyright.setup {}
