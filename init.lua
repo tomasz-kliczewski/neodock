@@ -130,6 +130,16 @@ require('nvim-treesitter.configs').setup {
       }}
 
 
+  -- ==========================================================================
+  -- Folding
+  -- ==========================================================================
+  vim.opt.foldcolumn = "1"
+  vim.opt.foldlevel = 99
+  vim.opt.foldlevelstart = 99
+  vim.opt.foldenable = true
+  vim.opt.foldmethod = "expr"
+  vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+  -- vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()",
 -- nvim-cmp
 -- menu,preview,menuone,noselect
 -- vim.opt.completeopt = { 'menu', 'preview', 'menuone', 'noselect', 'noinsert' }
@@ -140,12 +150,37 @@ local cmp = require("cmp")
 -- require("luasnip.loaders.from_vscode").lazy_load()
 --
 cmp.setup({
-  mapping = cmp.mapping.preset.insert({
-  --       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-  --       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-  --       ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    }),
+	mapping = {
+		['<C-Space>'] = cmp.mapping.complete({}),
+		['<C-e>'] = cmp.mapping.close(),
+		['<C-u>'] = cmp.mapping.scroll_docs(-4),
+		['<C-d>'] = cmp.mapping.scroll_docs(4),
+		['<CR>'] = cmp.mapping.confirm({
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = false,
+		}),
+
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			else
+				fallback()
+			end
+		end, {"i", "s"}),
+
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, {"i", "s"}),
+
+	},
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
