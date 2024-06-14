@@ -37,3 +37,5 @@ opt.splitbelow = true -- split horizontal window to the bottom
 opt.swapfile = false
 
 opt.termguicolors = true
+
+opt.completeopt = {'menu','menuone','noselect'} 
