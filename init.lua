@@ -1,4 +1,7 @@
---
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -22,7 +25,8 @@ require('vscode').setup({
 require('vscode').load()
 vim.cmd.colorscheme "vscode"
 
-
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 require('lualine').setup {
   options = {        
     icons_enabled = true,
@@ -101,7 +105,8 @@ require('nvim-treesitter.configs').setup {
         "bash",
         "lua",
         "vim",
-        "dockerfile",
+"vimdoc",
+    "dockerfile",
         "gitignore",
         "c",},
 
@@ -126,36 +131,64 @@ require('nvim-treesitter.configs').setup {
 
 
 -- nvim-cmp
+-- menu,preview,menuone,noselect
+-- vim.opt.completeopt = { 'menu', 'preview', 'menuone', 'noselect', 'noinsert' }
+-- vim.opt.shortmess = vim.opt.shortmess + { c = true }
+-- vim.api.nvim_set_option('updatetime', 350)
 
 local cmp = require("cmp")
-require("luasnip.loaders.from_vscode").lazy_load()
+-- require("luasnip.loaders.from_vscode").lazy_load()
 --
 cmp.setup({
   mapping = cmp.mapping.preset.insert({
-      -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      -- ['<C-o>'] = cmp.mapping.complete(),
-      -- ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  --       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+  --       ['<C-f>'] = cmp.mapping.scroll_docs(4),
+  --       ['<C-Space>'] = cmp.mapping.complete(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
     end,
-  },
+  }, 
   sources = {
-    { name = 'path' },                              -- file paths
+    -- { name = 'path' },                              -- file paths
     { name = 'nvim_lsp'},                           -- from language server
     { name = 'nvim_lsp_signature_help'},            -- display function signatures with current parameter emphasized
-    -- { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
+    { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
     { name = 'buffer', keyword_length = 2 },        -- source current buffer
     { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip 
-    { name = 'calc'},                               -- source for math calculation
-    -- { name = 'luasnip' },
-
+    -- { name = 'calc'},                               -- source for math calculation
+    { name = 'luasnip' , keyword_length=2},
   },
+      window = {
+        completion = {
+            -- cmp.config.window.bordered(),
+            -- col_offset = 3,
+            -- side_padding = 1,
+        },
+        documentation = cmp.config.window.bordered(),
+},
+
+    -- `/` cmdline setup.
+    cmp.setup.cmdline('/', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = 'buffer' }
+      }
+    }),
+
+    -- `:` cmdline setup.
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = 'cmdline' },
+      }),
+      matching = { disallow_symbol_nonprefix_matching = false }
+    }),
+
 })
---
+ --
 require("mason").setup {}
 require("mason-lspconfig").setup { ensure_installed = { "pyright", }, }
 require 'lspconfig'.pyright.setup {}
