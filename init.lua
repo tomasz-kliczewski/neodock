@@ -21,17 +21,17 @@ require("plugins")
 
 
 -- ========================================= COLORSCHEME 
-local c = require('vscode.colors').get_colors()
-require('vscode').setup({
-  italic_comments = true,
-})
-require('vscode').load()
-vim.cmd.colorscheme "vscode"
+-- local c = require('vscode.colors').get_colors()
+-- require('vscode').setup({
+--   italic_comments = true,
+-- })
+-- require('vscode').load()
+vim.cmd.colorscheme "alabaster"
 
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'vscode',
+    theme = 'alabaster',
     component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
     disabled_filetypes = {

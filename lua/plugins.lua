@@ -2,7 +2,8 @@ require("lazy").setup({
 	"nvim-tree/nvim-web-devicons",
 	"nvim-treesitter/nvim-treesitter",
 	"nvim-tree/nvim-tree.lua",
-	'Mofiqul/vscode.nvim',
+	-- 'Mofiqul/vscode.nvim',
+'p00f/alabaster.nvim',
 	'nvim-lualine/lualine.nvim',
 	"nvim-lua/plenary.nvim",
 	'BurntSushi/ripgrep', -- Telescope grep
