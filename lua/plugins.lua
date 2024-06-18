@@ -3,7 +3,9 @@ require("lazy").setup({
 	"nvim-treesitter/nvim-treesitter",
 	"nvim-tree/nvim-tree.lua",
 	-- 'Mofiqul/vscode.nvim',
-'p00f/alabaster.nvim',
+	'mg979/vim-visual-multi',
+	'p00f/alabaster.nvim',
+	'brenoprata10/nvim-highlight-colors',
 	'nvim-lualine/lualine.nvim',
 	"nvim-lua/plenary.nvim",
 	'BurntSushi/ripgrep', -- Telescope grep

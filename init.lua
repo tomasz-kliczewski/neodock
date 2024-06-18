@@ -27,7 +27,7 @@ require("plugins")
 -- })
 -- require('vscode').load()
 vim.cmd.colorscheme "alabaster"
-
+require('nvim-highlight-colors').setup({})
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -241,6 +241,8 @@ cmp.setup({
         --   },
         -- },
         -- pickers = {}
+	-- layout_strategy = 'horizontal',
+	--        layout_config = { height = 1, width = 1 },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
