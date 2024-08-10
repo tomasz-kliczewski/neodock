@@ -31,6 +31,12 @@ vim.opt.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.opt.breakindent = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.shiftround = true
+vim.opt.expandtab = true
+vim.opt.list = true
+-- vim.opt.listchars:
 
 -- Save undo history
 vim.opt.undofile = true
@@ -64,7 +70,7 @@ vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
-
+vim.o.guicursor = 'v-r-cr:hor50,i:ver50'
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
@@ -106,3 +112,14 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- backspace
 vim.opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
+
+
+-- set termguicolors
+-- autocmd InsertEnter * hi Normal guibg=#4D4D4D
+-- autocmd InsertLeave * hi Normal guibg=#333333
+
+-- Moving selection with Alt
+-- vim.keymap.set("v", "<M-j>", ":m '>+1<CR>gv=gv")
+-- vim.keymap.set("v", "<M-k>", ":m '<-2<CR>gv=gv")
+-- vim.keymap.set("v", "<M-h>", "<gv")
+-- vim.keymap.set("v", "<M-l>", ">gv")

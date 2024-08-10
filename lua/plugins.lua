@@ -4,7 +4,16 @@ require("lazy").setup({
 	"nvim-tree/nvim-tree.lua",
 	-- 'Mofiqul/vscode.nvim',
 	'mg979/vim-visual-multi',
-	'p00f/alabaster.nvim',
+  'echasnovski/mini.move',
+
+	-- 'p00f/alabaster.nvim',
+  {
+    "ring0-rootkit/ring0-dark.nvim",
+    priority = 1000, -- Make sure to load this before all the other start plugins.
+    init = function()
+        vim.cmd.colorscheme("ring0dark")
+    end,
+},
 	'brenoprata10/nvim-highlight-colors',
 	'nvim-lualine/lualine.nvim',
 	"nvim-lua/plenary.nvim",

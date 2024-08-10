@@ -26,14 +26,13 @@ require("plugins")
 --   italic_comments = true,
 -- })
 -- require('vscode').load()
-vim.cmd.colorscheme "alabaster"
+-- vim.cmd.colorscheme "alabaster"
 require('nvim-highlight-colors').setup({})
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'alabaster',
-    component_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
     disabled_filetypes = {
       statusline = {},
       winbar = {},
@@ -69,6 +68,27 @@ require('lualine').setup {
   extensions = {}
 }
 
+require('mini.move').setup {
+mappings = {
+    -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
+    left = '<M-left>',
+    right = '<M-right>',
+    down = '<M-down>',
+    up = '<M-up>',
+
+    -- Move current line in Normal mode
+    line_left = '<M-left>',
+    line_right = '<M-right>',
+    line_down = '<M-down>',
+    line_up = '<M-up>',
+  },
+
+  -- Options which control moving behavior
+  options = {
+    -- Automatically reindent selection during linewise vertical move
+    reindent_linewise = true,
+    },
+}
 
 require('nvim-tree').setup {
   sort_by = "case_sensitive",
@@ -109,7 +129,8 @@ require('nvim-treesitter.configs').setup {
     "vimdoc",
     "dockerfile",
     "gitignore",
-    "c", },
+    "c",
+    "sql", },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -241,11 +262,11 @@ cmp.setup({
         --   },
         -- },
         -- pickers = {}
-	-- layout_strategy = 'horizontal',
+	layout_strategy = 'vertical',
 	--        layout_config = { height = 1, width = 1 },
         extensions = {
           ['ui-select'] = {
-            require('telescope.themes').get_dropdown(),
+            require('telescope.themes').get_ivy(),
           },
         },
       }
@@ -326,6 +347,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Fuzzy find all the symbols in your current document.
     --  Symbols are things like variables, functions, types, etc.
     map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+    -- map('<leader>df', require('telescope.builtin').lsp_document_symbols({ symbols='function' }), '[D]ocument [F]unctions')
+    -- map('<leader>dv', require('telescope.builtin').lsp_document_symbols({ symbols='variable' }), '[D]ocument [V]ariables')
 
     -- Fuzzy find all the symbols in your current workspace.
     --  Similar to document symbols, except searches over your entire project.
