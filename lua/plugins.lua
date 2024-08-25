@@ -8,7 +8,7 @@ require("lazy").setup({
 
 	-- 'p00f/alabaster.nvim',
   {
-    "ring0-rootkit/ring0-dark.nvim",
+    "tomasz-kliczewski/yellow-submarine.nvim",
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
         vim.cmd.colorscheme("ring0dark")
@@ -25,6 +25,7 @@ require("lazy").setup({
 		branch = '0.1.x',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
+      "debugloop/telescope-undo.nvim",
 			{ -- If encountering errors, see telescope-fzf-native README for installation instructions
 				'nvim-telescope/telescope-fzf-native.nvim',
 
