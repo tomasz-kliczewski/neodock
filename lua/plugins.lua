@@ -11,7 +11,7 @@ require("lazy").setup({
     "tomasz-kliczewski/yellow-submarine.nvim",
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-        vim.cmd.colorscheme("ring0dark")
+        vim.cmd.colorscheme("yellowsub")
     end,
 },
 	'brenoprata10/nvim-highlight-colors',
